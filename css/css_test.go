@@ -23,4 +23,14 @@ func TestMinifyCss(t *testing.T) {
 	if minifiedConent != expectedContent {
 		t.Errorf("Expected to get:\n %v\n, but got: %v\n", expectedContent, minifiedConent)
 	}
+	classesMap = map[string]string{
+		"unknown": "a",
+	}
+	_, err = MustMinifyCss(cssContent, classesMap)
+	if err == nil {
+		t.Errorf("Expected to get error due to missing css class, but got nil")
+	}
+	if err.Error() != "unused class: .button" {
+		t.Errorf("Expected to get error message:\n%v\n,but got:\n%v\n", "unused class: .button", err.Error())
+	}
 }
