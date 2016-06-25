@@ -1,18 +1,17 @@
 package css
 
 import (
-	"fmt"
-	"github.com/gorilla/css/scanner"
+	// "fmt"
+	"github.com/aymerick/douceur/parser"
 )
 
-func MinifyCss(content []byte, classesMap map[string]string) ([]byte, error) {
-	s := scanner.New(string(content))
-	for {
-		token := s.Next()
-		if token.Type == scanner.TokenEOF || token.Type == scanner.TokenError {
-			break
-		}
-		fmt.Println(token)
+func MinifyCss(content string, classesMap map[string]string) (string, error) {
+	stylesheet, err := parser.Parse(string(content))
+	if err != nil {
+		return "", err
 	}
-	return nil, nil
+	for _, rule := range stylesheet.Rules {
+		rule.Selectors = []string{".a"}
+	}
+	return stylesheet.String(), nil
 }
