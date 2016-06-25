@@ -1,0 +1,25 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "ew6PapbTwsXcwAymkdJx5mnsXKM=",
+			"path": "github.com/aymerick/douceur/css",
+			"revision": "7176f146738114e7386d4f915a0bbf55945e22c9",
+			"revisionTime": "2015-08-27T15:13:52Z"
+		},
+		{
+			"checksumSHA1": "UDfZCifbs3mf0UO91WuNiTpwKq4=",
+			"path": "github.com/aymerick/douceur/parser",
+			"revision": "7176f146738114e7386d4f915a0bbf55945e22c9",
+			"revisionTime": "2015-08-27T15:13:52Z"
+		},
+		{
+			"checksumSHA1": "UNlILKZlAiLwYYwj70y+Q8n13D0=",
+			"path": "github.com/gorilla/css/scanner",
+			"revision": "a80e24ada2699166544311f07c26ef37eaf64012",
+			"revisionTime": "2015-03-17T22:22:38Z"
+		}
+	],
+	"rootPath": "github.com/romanoff/hyper-ui"
+}
