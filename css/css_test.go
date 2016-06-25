@@ -34,3 +34,22 @@ func TestMinifyCss(t *testing.T) {
 		t.Errorf("Expected to get error message:\n%v\n,but got:\n%v\n", "unused class: .button", err.Error())
 	}
 }
+
+func TestAddClassNamespace(t *testing.T) {
+	cssContent := `
+.button {
+  background-color: red;
+}
+`
+	content, err := AddClassNamespace("goog.button", cssContent)
+	if err != nil {
+		t.Errorf("Expected to get no error, but got %v\n", err)
+	}
+	expectedContent := `.goog-button---button {
+  background-color: red;
+}`
+	if content != expectedContent {
+		t.Errorf("Expected to get:\n %v\n, but got: %v\n", expectedContent, content)
+	}
+
+}

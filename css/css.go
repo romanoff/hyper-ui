@@ -7,6 +7,10 @@ import (
 	"github.com/gorilla/css/scanner"
 )
 
+func AddClassNamespace(namespace, content string) (string, error) {
+	return content, nil
+}
+
 func MustMinifyCss(content string, classesMap map[string]string) (string, error) {
 	return minifyCss(content, classesMap, true)
 }
