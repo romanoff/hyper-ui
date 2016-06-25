@@ -5,10 +5,40 @@ import (
 	"fmt"
 	"github.com/aymerick/douceur/parser"
 	"github.com/gorilla/css/scanner"
+	"strings"
 )
 
 func AddClassNamespace(namespace, content string) (string, error) {
-	return content, nil
+	stylesheet, err := parser.Parse(string(content))
+	if err != nil {
+		return "", err
+	}
+	for _, rule := range stylesheet.Rules {
+		selectors := make([]string, 0, 0)
+		for _, selector := range rule.Selectors {
+			s := scanner.New(selector)
+			token := s.Next()
+			if token.Type != scanner.TokenChar || token.Value != "." {
+				selectors = append(selectors, selector)
+				continue
+			}
+			token = s.Next()
+			if token.Type != scanner.TokenIdent {
+				selectors = append(selectors, selector)
+				continue
+			}
+			selectors = append(selectors, "."+AppendNamespace(namespace, token.Value))
+		}
+		rule.Selectors = selectors
+	}
+	return stylesheet.String(), nil
+}
+
+func AppendNamespace(namespace string, cssClass string) string {
+	if strings.Contains(cssClass, "---") {
+		return cssClass
+	}
+	return strings.Replace(namespace, ".", "-", -1) + "---" + cssClass
 }
 
 func MustMinifyCss(content string, classesMap map[string]string) (string, error) {
