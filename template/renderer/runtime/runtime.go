@@ -5,5 +5,5 @@ import (
 )
 
 func Render(tree *ast.Tree) ([]byte, error) {
-	return nil, nil
+	return []byte("Hello world"), nil
 }

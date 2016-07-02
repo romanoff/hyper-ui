@@ -9,11 +9,12 @@ func (t NodeType) Type() NodeType {
 
 const (
 	NodeText NodeType = iota // Plain text.
+	NodeList                 // A list of Nodes.
 )
 
 type Node interface {
 	Type() NodeType
-	String() string
+	// String() string
 	Position() Pos
 	tree() *Tree
 }
