@@ -58,7 +58,3 @@ type VariableNode struct {
 func (self *VariableNode) tree() *Tree {
 	return self.tr
 }
-
-func (self *VariableNode) Value(context interface{}) ([]byte, error) {
-	return []byte("Hello"), nil
-}

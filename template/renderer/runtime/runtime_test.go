@@ -31,7 +31,7 @@ func TestRenderVariable(t *testing.T) {
 		Root: &ast.ListNode{Nodes: []ast.Node{
 			&ast.VariableNode{
 				NodeType: ast.NodeVariable,
-				Ident:    []string{},
+				Ident:    []string{"."},
 			},
 		}},
 	}
