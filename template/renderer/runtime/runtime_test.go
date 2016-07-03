@@ -13,7 +13,7 @@ func TestRenderText(t *testing.T) {
 	}
 	renderer := &Renderer{Tree: tr}
 	renderer.Init()
-	content, err := renderer.Render()
+	content, err := renderer.Render(nil)
 	if err != nil {
 		t.Errorf("Expected not to get error while rendering text node, but got %v", err)
 	}

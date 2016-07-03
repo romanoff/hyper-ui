@@ -27,7 +27,7 @@ func (self *Renderer) writeLine(parts ...[]byte) *Renderer {
 	return self
 }
 
-func (self *Renderer) writeNode(node ast.Node) {
+func (self *Renderer) writeNode(node ast.Node, context interface{}) {
 	switch n := node.(type) {
 	case *ast.TextNode:
 		self.write(n.Content)
@@ -36,9 +36,9 @@ func (self *Renderer) writeNode(node ast.Node) {
 	panic("unreachable")
 }
 
-func (self *Renderer) Render() ([]byte, error) {
+func (self *Renderer) Render(context interface{}) ([]byte, error) {
 	for _, node := range self.Tree.Root.Nodes {
-		self.writeNode(node)
+		self.writeNode(node, context)
 	}
 	return self.buffer.Bytes(), nil
 }
