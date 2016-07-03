@@ -11,7 +11,9 @@ func TestRenderText(t *testing.T) {
 			&ast.TextNode{Content: []byte("Hello world")},
 		}},
 	}
-	content, err := Render(tr)
+	renderer := &Renderer{Tree: tr}
+	renderer.Init()
+	content, err := renderer.Render()
 	if err != nil {
 		t.Errorf("Expected not to get error while rendering text node, but got %v", err)
 	}
