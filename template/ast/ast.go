@@ -10,6 +10,7 @@ func (t NodeType) Type() NodeType {
 const (
 	NodeText NodeType = iota // Plain text.
 	NodeList                 // A list of Nodes.
+	NodeVariable
 )
 
 type Node interface {
@@ -45,4 +46,19 @@ type TextNode struct {
 
 func (self *TextNode) tree() *Tree {
 	return self.tr
+}
+
+type VariableNode struct {
+	NodeType
+	Pos
+	tr    *Tree
+	Ident []string // Variable name and fields in lexical order.
+}
+
+func (self *VariableNode) tree() *Tree {
+	return self.tr
+}
+
+func (self *VariableNode) Value(context interface{}) ([]byte, error) {
+	return []byte("Hello"), nil
 }

@@ -27,18 +27,29 @@ func (self *Renderer) writeLine(parts ...[]byte) *Renderer {
 	return self
 }
 
-func (self *Renderer) writeNode(node ast.Node, context interface{}) {
+func (self *Renderer) writeNode(node ast.Node, context interface{}) error {
 	switch n := node.(type) {
 	case *ast.TextNode:
 		self.write(n.Content)
-		return
+		return nil
+	case *ast.VariableNode:
+		content, err := n.Value(context)
+		if err != nil {
+			return err
+		}
+		self.write(content)
+		return nil
 	}
 	panic("unreachable")
 }
 
 func (self *Renderer) Render(context interface{}) ([]byte, error) {
+	var err error
 	for _, node := range self.Tree.Root.Nodes {
-		self.writeNode(node, context)
+		err = self.writeNode(node, context)
+		if err != nil {
+			return nil, err
+		}
 	}
 	return self.buffer.Bytes(), nil
 }
