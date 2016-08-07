@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/romanoff/hyper-ui/template/ast"
+	"strings"
 )
 
 type Renderer struct {
@@ -56,6 +57,9 @@ func (self *Renderer) writeNode(node ast.Node,
 		return nil
 	case *ast.TagNode:
 		self.write([]byte("<" + n.Name))
+		if len(n.Classes) > 0 {
+			self.write([]byte(" class=" + "\"" + strings.Join(n.Classes, " ") + "\""))
+		}
 		for attrName, value := range n.Attributes {
 			self.write([]byte(" " + attrName + "=" + "\"" + value + "\""))
 		}

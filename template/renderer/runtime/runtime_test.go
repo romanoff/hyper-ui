@@ -79,6 +79,7 @@ func TestRenderTag(t *testing.T) {
 			&ast.TagNode{
 				Name:       "div",
 				Attributes: map[string]string{"id": "identifier"},
+				Classes:    []string{"a", "b"},
 				ListNode: &ast.ListNode{
 					Nodes: []ast.Node{
 						&ast.TextNode{
@@ -96,7 +97,7 @@ func TestRenderTag(t *testing.T) {
 	if err != nil {
 		t.Errorf("Expected not to get error while rendering tag node, but got %v", err)
 	}
-	expected := "<div id=\"identifier\">Hello world</div>"
+	expected := "<div class=\"a b\" id=\"identifier\">Hello world</div>"
 	if expected != string(content) {
 		t.Errorf("Expected to get:\n%v\n,but got:\n%v\n", expected, string(content))
 	}
