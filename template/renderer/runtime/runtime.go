@@ -56,6 +56,7 @@ func (self *Renderer) writeNode(node ast.Node,
 		self.write([]byte(fmt.Sprintf("%v", value)))
 		return nil
 	case *ast.TagNode:
+		//TODO: escape tag name, attribute names and values
 		self.write([]byte("<" + n.Name))
 		if len(n.Classes) > 0 {
 			self.write([]byte(" class=" + "\"" + strings.Join(n.Classes, " ") + "\""))
