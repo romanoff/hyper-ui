@@ -66,6 +66,8 @@ type TagNode struct {
 	Pos
 	tr    *Tree
 	ListNode *ListNode
+	Attributes map[string]string
+	Classes []string
 }
 
 func (self *TagNode) tree() *Tree {

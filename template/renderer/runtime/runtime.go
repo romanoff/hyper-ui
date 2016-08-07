@@ -55,7 +55,11 @@ func (self *Renderer) writeNode(node ast.Node,
 		self.write([]byte(fmt.Sprintf("%v", value)))
 		return nil
 	case *ast.TagNode:
-		self.write([]byte("<" + n.Name + ">"))
+		self.write([]byte("<" + n.Name))
+		for attrName, value := range n.Attributes {
+			self.write([]byte(" " + attrName + "=" + "\"" + value + "\""))
+		}
+		self.write([]byte(">"))
 		self.writeNode(n.ListNode, context, variables)
 		self.write([]byte("</" + n.Name + ">"))
 		return nil
