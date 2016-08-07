@@ -11,6 +11,7 @@ const (
 	NodeText NodeType = iota // Plain text.
 	NodeList                 // A list of Nodes.
 	NodeVariable
+	NodeTag
 )
 
 type Node interface {
@@ -56,5 +57,17 @@ type VariableNode struct {
 }
 
 func (self *VariableNode) tree() *Tree {
+	return self.tr
+}
+
+type TagNode struct {
+	NodeType
+	Name string
+	Pos
+	tr    *Tree
+	ListNode *ListNode
+}
+
+func (self *TagNode) tree() *Tree {
 	return self.tr
 }

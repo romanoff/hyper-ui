@@ -54,17 +54,28 @@ func (self *Renderer) writeNode(node ast.Node,
 		//TODO: likely can be improved
 		self.write([]byte(fmt.Sprintf("%v", value)))
 		return nil
+	case *ast.TagNode:
+		self.write([]byte("<" + n.Name + ">"))
+		self.writeNode(n.ListNode, context, variables)
+		self.write([]byte("</" + n.Name + ">"))
+		return nil
+	case *ast.ListNode:
+		for _, node := range n.Nodes {
+			err := self.writeNode(node, context, variables)
+			if err != nil {
+				return err
+			}
+		}
+		return nil
 	}
+
 	panic("unreachable")
 }
 
 func (self *Renderer) Render(context interface{}) ([]byte, error) {
-	var err error
-	for _, node := range self.Tree.Root.Nodes {
-		err = self.writeNode(node, context, nil)
-		if err != nil {
-			return nil, err
-		}
+	err := self.writeNode(self.Tree.Root, context, nil)
+	if err != nil {
+		return nil, err
 	}
 	return self.buffer.Bytes(), nil
 }
