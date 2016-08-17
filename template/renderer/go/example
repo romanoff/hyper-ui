@@ -1,33 +1,34 @@
 package ui
 
 import (
-	"hui"
+	hui "github.com/romanoff/hyper-ui/template/uictx"
+	"bytes"
 )
 
 // acl__ui__button()
 
-func Button(ctx hui.Context, variables hui.Variables) ([]byte, error) {
-     buffer := new(bytes.Buffer)
-     buffer.write([]byte{'<', 'd', 'i', 'v', '>'})
-     buffer.write([]byte{'H', 'e', 'l', 'l', 'o'})
-     buffer.write([]byte{'<', '/', 'd', 'i', 'v', '>'})
-     buffer.WriteByte('\n')
-     return buffer.Bytes(), nil
+func Button(ctx interface{}, variables hui.Variables) ([]byte, error) {
+	buffer := new(bytes.Buffer)
+	buffer.Write([]byte{'<', 'd', 'i', 'v', '>'})
+	buffer.Write([]byte{'H', 'e', 'l', 'l', 'o'})
+	buffer.Write([]byte{'<', '/', 'd', 'i', 'v', '>'})
+	buffer.WriteByte('\n')
+	return buffer.Bytes(), nil
 }
 
-func RenderHomepage(ctx hui.Context, variables hui.Variables) ([]byte, error) {
-      buffer := new(bytes.Buffer)
-      var tmp []byte
-      var err error
-      tmp, err = Button(nil, nil)
-      if err != nil {
-      	 return nil, err
-      }
-      buffer.write(tmp)
-      tmp, err = Button(nil, nil)
-      if err != nil {
-      	 return nil, err
-      }
-      buffer.write(tmp)      
-      return buffer.Bytes(), nil
+func RenderHomepage(ctx interface{}, variables hui.Variables) ([]byte, error) {
+	buffer := new(bytes.Buffer)
+	var tmp []byte
+	var err error
+	tmp, err = Button(nil, nil)
+	if err != nil {
+		return nil, err
+	}
+	buffer.Write(tmp)
+	tmp, err = Button(nil, nil)
+	if err != nil {
+		return nil, err
+	}
+	buffer.Write(tmp)
+	return buffer.Bytes(), nil
 }
