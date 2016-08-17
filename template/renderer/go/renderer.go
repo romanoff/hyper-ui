@@ -30,6 +30,14 @@ func (self *Renderer) writeLine(parts ...[]byte) *Renderer {
 func (self *Renderer) writeNode(node ast.Node) error {
 	switch n := node.(type) {
 	case *ast.TextNode:
+		self.write([]byte("buffer.Write([]byte{"))
+		for i, v := range n.Content {
+			if i != 0 {
+				self.write([]byte{','})
+			}
+			self.write([]byte{'\'', v, '\''})
+		}
+		self.write([]byte("})\n"))
 		return nil
 	case *ast.VariableNode:
 		return nil
@@ -48,9 +56,11 @@ func (self *Renderer) writeNode(node ast.Node) error {
 }
 
 func (self *Renderer) Render() ([]byte, error) {
+	self.write([]byte("buffer := new(bytes.Buffer)\n"))
 	err := self.writeNode(self.Tree.Root)
 	if err != nil {
 		return nil, err
 	}
+	self.write([]byte("return buffer.Bytes(), nil\n"))
 	return self.buffer.Bytes(), nil
 }
