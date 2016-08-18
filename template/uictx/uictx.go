@@ -1,6 +1,6 @@
 package uictx
 
-func Get(value interface{}, key string) (interface{}, error) {
+func Get(value interface{}, keys ...string) (interface{}, error) {
 	return nil, nil
 }
 
