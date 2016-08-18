@@ -52,7 +52,7 @@ func (self *Renderer) writeNode(node ast.Node) error {
 		if len(n.Classes) > 0 || len(n.Attributes) > 0 {
 			self.write([]byte("elementOpen('" + n.Name + "', '', ["))
 			if len(n.Classes) > 0 {
-				self.write([]byte("'classes', '" + strings.Join(n.Classes, " ") + "'"))
+				self.write([]byte("'class', '" + strings.Join(n.Classes, " ") + "'"))
 			}
 			index := 0
 			for attrName, value := range n.Attributes {

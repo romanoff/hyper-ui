@@ -7,6 +7,20 @@ import (
 
 // acl__ui__button()
 
+func FancyButton(ctx interface{}, variables hui.Variables) ([]byte, error){
+	buffer := new(bytes.Buffer)
+	buffer.Write([]byte{'<','d','i','v'})
+	buffer.Write([]byte{' ', 'c', 'l', 'a', 's', 's', '=', '\''})
+	buffer.Write([]byte{'a', ' ', 'b'})
+	buffer.Write([]byte{'\''})
+	buffer.Write([]byte{' ','i','d', '=', '\''})
+	buffer.Write([]byte{'i','d','e','n','t','i','f','i','e','r'})
+	buffer.Write([]byte{'>'})
+	buffer.Write([]byte{'H','e','l','l','o',' ','w','o','r','l','d'})
+	buffer.Write([]byte{'<', '/','d','i','v', '>'})
+	return buffer.Bytes(), nil
+}
+
 func Button(ctx interface{}, variables hui.Variables) ([]byte, error) {
 	buffer := new(bytes.Buffer)
 	buffer.Write([]byte{'<', 'd', 'i', 'v', '>'})

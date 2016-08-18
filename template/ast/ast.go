@@ -68,6 +68,7 @@ type TagNode struct {
 	ListNode *ListNode
 	Attributes map[string]string
 	Classes []string
+	Void bool
 }
 
 func (self *TagNode) tree() *Tree {

@@ -91,7 +91,7 @@ func TestRenderTag(t *testing.T) {
 	if err != nil {
 		t.Errorf("Expected not to get error while rendering tag node, but got %v", err)
 	}
-	expected := `elementOpen('div', '', ['classes', 'a b', 'id', 'identifier'])
+	expected := `elementOpen('div', '', ['class', 'a b', 'id', 'identifier'])
 text('Hello world')
 elementClose('div')
 `

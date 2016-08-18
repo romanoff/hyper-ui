@@ -3,6 +3,7 @@ package gorenderer
 import (
 	"bytes"
 	"github.com/romanoff/hyper-ui/template/ast"
+	"strings"
 )
 
 type Renderer struct {
@@ -42,6 +43,42 @@ func (self *Renderer) writeNode(node ast.Node) error {
 	case *ast.VariableNode:
 		return nil
 	case *ast.TagNode:
+		self.write([]byte("buffer.Write([]byte{'<'"))
+		for _, v := range n.Name {
+			self.write([]byte{',', '\'', byte(v), '\''})
+		}
+		self.write([]byte("})\n"))
+		if len(n.Classes) > 0 {
+			self.write([]byte("buffer.Write([]byte{' ', 'c', 'l', 'a', 's', 's', '=', '\\''})\n"))
+			self.write([]byte("buffer.Write([]byte{"))
+			self.write([]byte("'" + strings.Join(n.Classes, "', ' ', '") + "'"))
+			self.write([]byte("})\n"))
+			self.write([]byte("buffer.Write([]byte{'\\''})\n"))
+		}
+		if len(n.Attributes) > 0 {
+			for attrName, value := range n.Attributes {
+				self.write([]byte("buffer.Write([]byte{' '"))
+				for _, v := range attrName {
+					self.write([]byte{',', '\'', byte(v), '\''})
+				}
+				self.write([]byte(", '=', '\\''})\n"))
+				self.write([]byte("buffer.Write([]byte{"))
+				for i, v := range value {
+					if i != 0 {
+						self.write([]byte{','})
+					}
+					self.write([]byte{'\'', byte(v), '\''})
+				}
+				self.write([]byte(", '\\''})\n"))
+			}
+		}
+		self.write([]byte("buffer.Write([]byte{'>'})\n"))
+		self.writeNode(n.ListNode)
+		self.write([]byte("buffer.Write([]byte{'<', '/'"))
+		for _, v := range n.Name {
+			self.write([]byte{',', '\'', byte(v), '\''})
+		}
+		self.write([]byte(", '>'})\n"))
 		return nil
 	case *ast.ListNode:
 		for _, node := range n.Nodes {
